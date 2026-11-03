@@ -141,3 +141,7 @@ spaces_remaining: 0
 - npm test: 21 passed, 0 failed. npm run check and npm run package: exit 0, dist/insta-pick-0.2.3.zip.
 - Earlier stepped variant fixture: ego_space_name=harness-qa-browser-headless-insta-final-icons-20261103, spaceId=27, icons=2, loaded=true, opacity=1; finish_ok=true, spaces_remaining=0. Final refinement inspected as an asset, no new browser QA run.
 - Chrome page confirms 0.2.3 enabled after reload click; AXPress returned unverified/accessibility_action_unasserted, so actual new-asset loading in Instagram remains unverified. Refresh Instagram tabs.
+
+## 0.2.4 — close-set shafts
+
+Built-in generated PNG visually inspected: longer, closely grouped right shafts, one arrowhead. Measured alpha bounds (195,230,1059,1069); CSS canvas 31.931px. `npm test`: 21 passed, 0 failed; `npm run check` and `npm run package`: exit 0. Chrome reload changed displayed version from 0.2.3 to 0.2.4, enabled. Instagram rendering of this asset not independently re-tested.

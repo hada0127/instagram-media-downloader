@@ -21,3 +21,5 @@
 - v0.2.3 supersedes the double-chevron variant: both icons have ONE arrowhead; all-download adds two short vertical strokes on the upper right, stepped upward. Tray, visual size and placement stay matched.
 
 - Final v0.2.3 refinement: move the all-download arrow left and match the two right strokes to its shaft weight. Re-measure alpha bounds when replacing PNGs.
+
+- v0.2.4 replaces short right ticks with closely grouped, equal-length/weight shaft strokes stepped upward; one arrowhead remains. See docs/icon-prompts.md.

@@ -2,11 +2,11 @@
 
 인스타그램 게시물의 **사진·영상을 한 개씩, 선택한 항목만, 또는 전체 다운로드**하는 Chrome 확장 프로그램입니다.
 
-> **v0.2.3 미리보기 버전** — 일반 게시물·릴스 화면에 아이콘을 표시합니다. 자동 테스트 및 실제 릴스 1건의 MP4 영상·음성 파일을 확인했습니다. Instagram의 화면이나 비공식 데이터 형식이 바뀌면 수집이 실패할 수 있습니다.
+> **v0.2.4 미리보기 버전** — 일반 게시물·릴스 화면에 아이콘을 표시합니다. 자동 테스트 및 실제 릴스 1건의 MP4 영상·음성 파일을 확인했습니다. Instagram의 화면이나 비공식 데이터 형식이 바뀌면 수집이 실패할 수 있습니다.
 
 ## 설치
 
-1. [Releases](https://github.com/hada0127/instagram-media-downloader/releases)에서 `insta-pick-0.2.3.zip`을 내려받아 압축을 풉니다.
+1. [Releases](https://github.com/hada0127/instagram-media-downloader/releases)에서 `insta-pick-0.2.4.zip`을 내려받아 압축을 풉니다.
 2. Chrome 주소창에 `chrome://extensions`를 입력합니다.
 3. 오른쪽 위 **개발자 모드**를 켭니다.
 4. **압축해제된 확장 프로그램을 로드합니다**를 누르고 `manifest.json`이 들어 있는 폴더를 선택합니다.
@@ -62,6 +62,6 @@ npm run check
 npm run package
 ```
 
-패키지: `dist/insta-pick-0.2.3.zip`. 상세 구조는 [설계 문서](docs/architecture.md), 검증 범위는 [검증 기록](docs/verification.md)을 참고하세요.
+패키지: `dist/insta-pick-0.2.4.zip`. 상세 구조는 [설계 문서](docs/architecture.md), 검증 범위는 [검증 기록](docs/verification.md)을 참고하세요.
 
 Chrome API 근거: [scripting](https://developer.chrome.com/docs/extensions/reference/api/scripting), [downloads](https://developer.chrome.com/docs/extensions/reference/api/downloads), [storage](https://developer.chrome.com/docs/extensions/reference/api/storage).

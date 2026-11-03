@@ -52,7 +52,7 @@ export function mountInlineButtons() {
       img{display:block;pointer-events:none;filter:brightness(0)}
       /* Measured alpha bounds; reproduce with scripts/measure-icons.py. */
       .one img{width:32.267px;height:32.267px;transform:translate(0.013px,-0.579px)}
-      .all img{width:32.005px;height:32.005px;transform:translate(0.000px,-0.574px)}
+      .all img{width:31.931px;height:31.931px;transform:translate(0.000px,-0.573px)}
       :host([data-light-icons]) img{filter:brightness(0) invert(1)}
       .status{position:absolute;right:0;top:44px;display:none;width:220px;padding:8px 10px;background:#fff;border:1px solid #e9e9ee;border-radius:8px;box-shadow:0 2px 8px #0002;font-size:11px;line-height:1.5;overflow-wrap:anywhere}.status:not(:empty){display:block}
     </style><div class="bar"><button class="one" type="button" title="현재 사진·영상 저장" aria-label="현재 항목 저장"><img alt="" aria-hidden="true"></button><button class="all" type="button" title="게시물 전체 저장" aria-label="게시물 전체 저장"><img alt="" aria-hidden="true"></button><span class="status" role="status" aria-live="polite"></span></div>`;

@@ -1,5 +1,13 @@
 # Toolbar icons
 
+## v0.2.4 — closely grouped equal-length strokes
+
+Built-in image_gen edit; runtime output `extension/assets/download-all.png`. User requested the three shafts to share weight and length, tightly grouped with upward steps. Generated asset visually inspected; pixel-perfect equality is not guaranteed by raster generation.
+
+Exact prompt:
+
+> Use case: precise-object-edit. Edit this transparent download-all icon. Preserve the U-shaped tray exactly and keep exactly one arrowhead. Replace the three vertical strokes with a tightly grouped set of THREE PARALLEL VERTICAL STROKES of IDENTICAL LENGTH and IDENTICAL THICKNESS. The leftmost stroke alone attaches to the existing downward arrowhead. The other two plain strokes have NO arrowheads. All three vertical strokes should be about 400px long and 80px thick on this 1254px canvas, with small 30px clear horizontal gaps between their edges. Leftmost center x=477, middle x=587, rightmost x=697. Leftmost top y=360 bottom y=760, middle top y=285 bottom y=685, rightmost top y=210 bottom y=610: a closely packed upward staircase to the right. Adjust the one existing V arrowhead so it connects only to the leftmost shaft and does not touch the middle or right shaft. The strokes are equally long, not short decorative ticks. Uniform rounded caps and near-black line weight. Preserve tray, canvas, alpha transparency, no text, no background, no shadows. Result must read as a tightly packed multiple-download icon at small size.
+
 Final v0.2.3 refinement: arrow shifted left; both right strokes use the arrow shaft weight. Built-in image_gen, transparent PNG, saved to `extension/assets/download-all.png`. Measured alpha bounds: (196,230,1058,1069); CSS regenerated with `scripts/measure-icons.py`.
 
 Exact final edit prompt:
