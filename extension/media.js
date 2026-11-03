@@ -18,7 +18,8 @@ export function normalizeItems(items) {
     id: String(item.id || new URL(item.url).pathname), type: item.type, url: item.url,
     preview: allowedMediaUrl(item.preview) ? item.preview : item.type === 'image' ? item.url : '',
     post: String(item.post || 'post').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 80) || 'post',
-    index: index + 1,
+    index: Number.isInteger(item.index) && item.index > 0 ? item.index : index + 1,
+    aliases: (Array.isArray(item.aliases) ? item.aliases : []).filter(allowedMediaUrl),
   }));
 }
 

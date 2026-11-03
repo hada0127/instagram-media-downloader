@@ -9,3 +9,6 @@
 - Public GitHub repository: hada0127/instagram-media-downloader. Artifacts contain only extension runtime files.
 
 - Local Chrome unpacked installation confirmed on 2026-11-03. Keep `extension/` in place; actual Instagram downloads remain unverified.
+
+- v0.2.0 adds Instagram-only content scripts and per-post inline buttons. Individual saves must match the visible slide; never default to item 1. Inline whole-post saves require a complete collection. Refresh Instagram tabs after reloading the extension.
+- Chrome v0.2.0 reload and inline button presence on the real Instagram feed are verified; real file downloads are still unverified.

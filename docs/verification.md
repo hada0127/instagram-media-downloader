@@ -68,3 +68,23 @@ spaces_remaining: 0
 ```
 
 이는 설치·활성화 확인이며 Instagram 수집·실제 다운로드 검증을 의미하지 않는다. 파일 선택 창에서 백그라운드 입력이 거부되어 사전 안내 후 `--restore-window`로 경로를 지정했다. 다른 확장이나 사용자 탭은 변경하지 않았다.
+
+## v0.2.0 화면 버튼 검증 — 2026-11-03
+
+- `npm test`: exit 0, tests 15 / pass 15 / fail 0.
+- `npm run check`, `npm run package`: exit 0, `dist/insta-pick-0.2.0.zip` 생성.
+- `ego-browser nodejs`로 `tests/inline-fixture.html`에서 두 번째 사진 → 현재 항목 저장, 세 번째 영상 → 현재 항목 저장, 게시물 전체 저장을 실행했다. 요청 배열 실출력: `saved: [["2"], ["3"], ["1","2","3"]]`.
+- 모의 게시물 동적 추가 후 `toolbarCount: 2`, 제거 후 `toolbarCount: 1` 확인. 초기 버튼 수는 1. 실제 CDN 파일 다운로드를 뜻하지 않는다.
+- ego_version: 0.6.1.13 / guide 2.1.0, ego_space_name: harness-qa-browser-headless-insta-inline-20261103, ego_space_id: 23, 각 라운드 exit 0, finish_ok: true, spaces_remaining: 0, handoff: false. 전면 앱 변화 unverified. 업데이트 실행 안 함.
+
+사용자가 설치를 요청한 Chrome의 로컬 확장을 다시 로드했다. `orca computer click ... --element-index 447` 후 실제 목록 출력에서 `0.2.0`, `켜짐, 확장 프로그램 사용 설정됨, Value: 1` 확인.
+
+이어 이번 실행에서 만든 탭으로 Instagram 피드를 열었다. `orca computer get-app-state --app com.google.Chrome --window-id 9920 --no-screenshot --json` (exit 0)의 실제 출력에서 각 게시물의 버튼을 확인했다(개인 게시물 내용은 기록하지 않음):
+
+```text
+텍스트, Value: ↘ Insta Pick
+버튼 현재 항목 저장
+버튼 게시물 전체 저장
+```
+
+피드에서 위 버튼 묶음 3개가 관찰되었다. 이 확인은 사용자가 지정한 Chrome 설치본의 실제 표시 확인이며 ego 하네스 PASS로 대체하지 않는다. 실제 게시물 파일 다운로드는 아직 검증하지 않았다. 임의의 피드 콘텐츠를 다운로드하지 않았다.

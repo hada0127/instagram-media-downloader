@@ -2,11 +2,11 @@
 
 인스타그램 게시물의 **사진·영상을 한 개씩, 선택한 항목만, 또는 전체 다운로드**하는 Chrome 확장 프로그램입니다.
 
-> **v0.1.0 미리보기 버전** — 자동 테스트와 모의 데이터 브라우저 UI 검증을 완료했습니다. Chrome에 확장을 설치하고 활성화 상태를 확인했습니다. 실제 로그인된 Instagram에서 수집 및 파일 저장은 아직 검증하지 않았습니다. Instagram 비공식 웹 API 변경에 따라 수집이 실패할 수 있습니다.
+> **v0.2.0 미리보기 버전** — 자동 테스트와 모의 데이터 브라우저 UI 검증을 완료했습니다. Chrome 0.2.0 설치·활성화와 실제 Instagram 피드의 저장 버튼 표시를 확인했습니다. 실제 로그인된 Instagram에서 수집 및 파일 저장은 아직 검증하지 않았습니다. Instagram 비공식 웹 API 변경에 따라 수집이 실패할 수 있습니다.
 
 ## 설치
 
-1. [Releases](https://github.com/hada0127/instagram-media-downloader/releases)에서 `insta-pick-0.1.0.zip`을 내려받아 압축을 풉니다.
+1. [Releases](https://github.com/hada0127/instagram-media-downloader/releases)에서 `insta-pick-0.2.0.zip`을 내려받아 압축을 풉니다.
 2. Chrome 주소창에 `chrome://extensions`를 입력합니다.
 3. 오른쪽 위 **개발자 모드**를 켭니다.
 4. **압축해제된 확장 프로그램을 로드합니다**를 누르고 `manifest.json`이 들어 있는 폴더를 선택합니다.
@@ -16,14 +16,16 @@
 
 ## 사용
 
-1. Instagram에 로그인하고 저장할 **게시물 또는 릴스**를 엽니다. `/p/…`, `/reel/…` 형식의 주소에서 사용합니다.
-2. 확장 프로그램 → **게시물 읽어 오기**를 누릅니다.
-3. **이 항목 저장**으로 하나만 저장하거나 체크박스로 여러 항목을 선택해 **선택 저장**을 누릅니다. **전체 저장**은 읽어 온 목록 전체를 저장합니다.
-4. 기본 다운로드 폴더의 `Instagram/게시물번호/`에서 파일을 확인합니다. 사진과 영상은 개별 파일로 저장됩니다.
+**확장 팝업을 열지 않아도 게시물 화면 위에 저장 버튼이 나타납니다.** 업데이트 직후 이미 열려 있는 Instagram 탭은 한 번 새로고침합니다.
 
-여러 장 게시물의 전체 데이터를 읽지 못하면 경고와 함께 화면에 로드된 항목만 보여줍니다. 이때 다음 장으로 넘기고 확장 프로그램을 다시 열어 읽으면 같은 탭·게시물 목록에 누적됩니다. 브라우저를 다시 시작하면 임시 목록은 사라집니다.
+- **현재 항목 저장**: 현재 화면에 보이는 사진 또는 영상 하나를 저장합니다. 여러 장 게시물에서 다음 장으로 넘기면 그 항목을 저장합니다.
+- **게시물 전체 저장**: 해당 게시물의 사진·영상을 모두 개별 파일로 저장합니다.
+- 홈 피드의 게시물과 게시물 상세 화면에서 동작하며, 새로 로드된 게시물에도 버튼을 붙입니다. Instagram의 화면 구조 변경에 따라 표시되지 않을 수 있습니다.
+- 현재 항목을 확실하게 식별하지 못하면 첫 사진을 임의로 저장하지 않고 안내합니다. 전체 목록이 불완전하면 전체 저장을 시작하지 않습니다.
 
-팝업을 닫아도 이미 시작한 다운로드는 Chrome이 처리합니다. 완료 여부는 `chrome://downloads`에서 확인합니다. Chrome의 ‘다운로드 전에 각 파일의 저장 위치 확인’ 설정에 따라 저장 창이 나타날 수 있습니다.
+저장 위치는 기본 다운로드 폴더의 `Instagram/게시물번호/`입니다. 시작 안내는 완료를 뜻하지 않으며, `chrome://downloads`에서 완료/실패를 확인합니다.
+
+기존 확장 팝업도 사용할 수 있습니다. 게시물이나 릴스 상세 주소에서 **게시물 읽어 오기** 후 체크박스로 선택 저장합니다. 부분 수집 목록은 같은 탭에서 다시 읽으면 누적되고 브라우저 세션 종료 시 사라집니다.
 
 ## 지원 범위와 한계
 
@@ -37,10 +39,11 @@
 
 ## 개인정보와 권한
 
-외부 수집 서버, 분석 도구, 계정 비밀번호 입력란이 없습니다. 게시물 읽기를 누를 때만 현재 Instagram 탭을 읽습니다. 데이터 요청은 Instagram, 파일 요청은 Instagram/Meta CDN으로 전송됩니다.
+외부 수집 서버, 분석 도구, 계정 비밀번호 입력란이 없습니다. Instagram 페이지에서는 게시물 위치를 감지해 버튼을 표시합니다. 미디어 정보 추가 요청과 파일 다운로드는 저장 버튼을 누를 때 실행합니다. 데이터 요청은 Instagram, 파일 요청은 Instagram/Meta CDN으로 전송됩니다.
 
 | 권한 | 용도 |
 | --- | --- |
+| Instagram content script | 인스타그램 페이지에 저장 버튼 자동 표시 |
 | `activeTab` | 사용자가 연 현재 탭에 일시적으로 접근 |
 | `scripting` | 현재 게시물의 미디어 정보 읽기 |
 | `downloads` | 파일 다운로드 및 완료/실패 확인 |
@@ -58,6 +61,6 @@ npm run check
 npm run package
 ```
 
-패키지: `dist/insta-pick-0.1.0.zip`. 상세 구조는 [설계 문서](docs/architecture.md), 검증 범위는 [검증 기록](docs/verification.md)을 참고하세요.
+패키지: `dist/insta-pick-0.2.0.zip`. 상세 구조는 [설계 문서](docs/architecture.md), 검증 범위는 [검증 기록](docs/verification.md)을 참고하세요.
 
 Chrome API 근거: [scripting](https://developer.chrome.com/docs/extensions/reference/api/scripting), [downloads](https://developer.chrome.com/docs/extensions/reference/api/downloads), [storage](https://developer.chrome.com/docs/extensions/reference/api/storage).

@@ -16,11 +16,11 @@ test('mixed carousel selects largest photos and actual video, without extra requ
 });
 test('authenticated API fallback provides carousel', async () => {
   const result = await run({response:{items:[{code:'ABC',carousel_media:[photo('1'),photo('2')]}]}});
-  assert.equal(result.items.length,2);
+  assert.equal(result.items.length,2); assert.equal(result.complete,true);
 });
 test('unavailable video is not silently replaced by its poster', async () => {
   const result = await run({embedded:[{code:'ABC',carousel_media:[photo('1'),{...photo('2'),media_type:2}]}]});
-  assert.equal(result.items.length,1); assert.match(result.warning,/2개 중 1개/);
+  assert.equal(result.items.length,1); assert.equal(result.complete,false); assert.match(result.warning,/2개 중 1개/);
 });
 test('wrong API post is rejected, no unrelated media downloaded', async () => {
   const result = await run({response:{items:[{code:'OTHER',...photo('1')}]}});
@@ -33,5 +33,5 @@ test('login/API errors are visible and non-post pages have guidance', async () =
 test('duplicate embedded records do not hide a missing carousel video', async () => {
   const post={code:'ABC',carousel_media:[photo('1'),{...photo('2'),media_type:2}]};
   const result=await run({embedded:[{one:post,two:post}]});
-  assert.equal(result.items.length,1); assert.match(result.warning,/2개 중 1개/);
+  assert.equal(result.items.length,1); assert.equal(result.complete,false); assert.match(result.warning,/2개 중 1개/);
 });
