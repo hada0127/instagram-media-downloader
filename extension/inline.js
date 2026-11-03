@@ -47,19 +47,45 @@ export function mountInlineButtons() {
       :host{color-scheme:light;font:12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
       :host([data-reel="true"]) .all{display:none}
       .bar{display:flex;align-items:center;gap:0;flex-wrap:nowrap;padding:0;color:inherit}
-      button{appearance:none;border:0;border-radius:0;background:transparent;color:inherit;padding:0;width:40px;height:40px;display:grid;place-items:center;font:600 12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;cursor:pointer}
+      button{position:relative;appearance:none;border:0;border-radius:0;background:transparent;color:inherit;padding:0;width:40px;height:40px;display:grid;place-items:center;font:600 12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;cursor:pointer}
       button:hover{opacity:.6}button:disabled{opacity:.5;cursor:wait}button:focus-visible{outline:2px solid #6677ef;outline-offset:2px}
       img{display:block;pointer-events:none;filter:brightness(0)}
       /* Measured alpha bounds; reproduce with scripts/measure-icons.py. */
-      .one img{width:32.267px;height:32.267px;transform:translate(0.013px,-0.579px)}
-      .all img{width:31.931px;height:31.931px;transform:translate(0.000px,-0.573px)}
+      .one img,.all img{width:32.267px;height:32.267px;transform:translate(0.013px,-0.579px)}
+      .count{position:absolute;top:1px;right:0;min-width:14px;height:14px;padding:0 2px;box-sizing:border-box;border-radius:7px;background:#111;color:#fff;font-size:10px;line-height:14px;text-align:center;pointer-events:none}
+      :host([data-light-icons]) .count{background:#fff;color:#111}
       :host([data-light-icons]) img{filter:brightness(0) invert(1)}
       .status{position:absolute;right:0;top:44px;display:none;width:220px;padding:8px 10px;background:#fff;border:1px solid #e9e9ee;border-radius:8px;box-shadow:0 2px 8px #0002;font-size:11px;line-height:1.5;overflow-wrap:anywhere}.status:not(:empty){display:block}
-    </style><div class="bar"><button class="one" type="button" title="현재 사진·영상 저장" aria-label="현재 항목 저장"><img alt="" aria-hidden="true"></button><button class="all" type="button" title="게시물 전체 저장" aria-label="게시물 전체 저장"><img alt="" aria-hidden="true"></button><span class="status" role="status" aria-live="polite"></span></div>`;
+    </style><div class="bar"><button class="one" type="button" title="현재 사진·영상 저장" aria-label="현재 항목 저장"><img alt="" aria-hidden="true"></button><button class="all" type="button" title="게시물 전체 저장" aria-label="게시물 전체 저장"><img alt="" aria-hidden="true"><span class="count" aria-hidden="true">…</span></button><span class="status" role="status" aria-live="polite"></span></div>`;
     shadow.querySelector('.one img').src=chrome.runtime.getURL('assets/download-one.png');
-    shadow.querySelector('.all img').src=chrome.runtime.getURL('assets/download-all.png');
+    shadow.querySelector('.all img').src=chrome.runtime.getURL('assets/download-one.png');
     root.prepend(host);
+    let countPath = '';
+    const badge = shadow.querySelector('.count');
+    function showCount(result) {
+      const count = result.total || (result.complete ? result.items.length : 0);
+      badge.textContent = count ? String(count) : '…';
+      const label = count ? `게시물 전체 ${count}개 저장` : '게시물 전체 저장 (개수 확인 안 됨)';
+      const button = shadow.querySelector('.all');
+      button.title = label;
+      button.setAttribute('aria-label',label);
+    }
+    async function updateCount() {
+      if (reel) return;
+      const currentPath = postPath(root), rect = root.getBoundingClientRect();
+      // Read once per visible post, not for offscreen preloaded cards or every mutation.
+      if (!currentPath || countPath === currentPath || rect.bottom <= 0 || rect.top >= innerHeight) return;
+      countPath = currentPath;
+      badge.textContent = '…';
+      try {
+        const result = await collectMedia({postPath:currentPath,scopeId});
+        if (host.isConnected && postPath(root) === currentPath) showCount(result);
+      } catch {
+        // Unknown counts stay unknown; saving performs its own fresh collection.
+      }
+    }
     function place() {
+      updateCount();
       const target = action(root,reel);
       if (!target) { host.style.setProperty('display','none','important'); return; }
       host.style.setProperty('display','block','important');
@@ -97,6 +123,7 @@ export function mountInlineButtons() {
       try {
         const result = await collectMedia({postPath:currentPath, scopeId});
         if (postPath(root) !== currentPath) throw new Error('게시물이 바뀌었어. 다시 눌러 줘.');
+        if (!reel) showCount(result);
         const items = normalizeItems(result.items);
         if (all && (!result.complete || items.length !== result.items.length)) throw new Error('게시물 전체를 확인하지 못했어. 현재 항목 저장을 이용하거나 새로고침 후 다시 눌러 줘.');
         let chosen = all ? items : [chooseCurrent(items,current,{singleVideo:result.complete})].filter(Boolean);

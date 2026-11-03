@@ -62,7 +62,7 @@ export async function collectMedia(options = {}) {
       extract(post);
     } catch (error) { apiError = error.name === 'TimeoutError' ? '응답 시간 초과' : error.message; }
   }
-  if (items.length) return {items, warning: items.length < expected ? `전체 ${expected}개 중 ${items.length}개만 읽었어. 일부 영상 주소를 찾지 못했어.` : '', source:'post', complete:items.length === expected};
+  if (items.length) return {items, total:expected, warning: items.length < expected ? `전체 ${expected}개 중 ${items.length}개만 읽었어. 일부 영상 주소를 찾지 못했어.` : '', source:'post', complete:items.length === expected};
 
   // Fallback is deliberately partial and labeled; no claim of a complete carousel.
   const root = options.scopeId && /^\d+$/.test(options.scopeId)

@@ -2,11 +2,11 @@
 
 인스타그램 게시물의 **사진·영상을 한 개씩, 선택한 항목만, 또는 전체 다운로드**하는 Chrome 확장 프로그램입니다.
 
-> **v0.2.4 미리보기 버전** — 일반 게시물·릴스 화면에 아이콘을 표시합니다. 자동 테스트 및 실제 릴스 1건의 MP4 영상·음성 파일을 확인했습니다. Instagram의 화면이나 비공식 데이터 형식이 바뀌면 수집이 실패할 수 있습니다.
+> **v0.2.5 미리보기 버전** — 일반 게시물·릴스 화면에 아이콘을 표시합니다. 자동 테스트 및 실제 릴스 1건의 MP4 영상·음성 파일을 확인했습니다. Instagram의 화면이나 비공식 데이터 형식이 바뀌면 수집이 실패할 수 있습니다.
 
 ## 설치
 
-1. [Releases](https://github.com/hada0127/instagram-media-downloader/releases)에서 `insta-pick-0.2.4.zip`을 내려받아 압축을 풉니다.
+1. [Releases](https://github.com/hada0127/instagram-media-downloader/releases)에서 `insta-pick-0.2.5.zip`을 내려받아 압축을 풉니다.
 2. Chrome 주소창에 `chrome://extensions`를 입력합니다.
 3. 오른쪽 위 **개발자 모드**를 켭니다.
 4. **압축해제된 확장 프로그램을 로드합니다**를 누르고 `manifest.json`이 들어 있는 폴더를 선택합니다.
@@ -18,7 +18,7 @@
 
 **확장 팝업이나 호버 없이, Instagram의 기본 버튼 옆에 다운로드 아이콘이 항상 표시됩니다.** 업데이트 직후 이미 열려 있는 Instagram 탭은 한 번 새로고침합니다.
 
-- 일반 게시물의 **즐겨찾기 왼쪽**에는 개별 저장과 전체 저장 아이콘 두 개가 표시됩니다. 트레이와 화살촉은 같고, 전체 저장에는 화살표 오른쪽에 조금씩 위로 올라가는 짧은 세로선 두 개가 추가됩니다. 릴스의 **좋아요 위**에는 영상 저장 아이콘 하나만 표시됩니다. 아이콘 위에 마우스를 올리면 기능 설명을 확인할 수 있습니다.
+- 일반 게시물의 **즐겨찾기 왼쪽**에는 개별 저장과 전체 저장 아이콘 두 개가 표시됩니다. 두 아이콘의 모양은 같고, 전체 저장에는 오른쪽 위에 전체 항목 수 배지가 표시됩니다. 개수를 확인하지 못하면 `…`로 표시합니다. 릴스의 **좋아요 위**에는 영상 저장 아이콘 하나만 표시됩니다. 아이콘 위에 마우스를 올리면 기능 설명을 확인할 수 있습니다.
 - **현재 항목 저장**: 현재 화면에 보이는 사진 또는 영상 하나를 저장합니다. 여러 장 게시물에서 다음 장으로 넘기면 그 항목을 저장합니다.
 - **게시물 전체 저장**: 해당 게시물의 사진·영상을 모두 개별 파일로 저장합니다.
 - 홈 피드의 게시물과 게시물 상세 화면에서 동작하며, 새로 로드된 게시물에도 버튼을 붙입니다. Instagram의 화면 구조 변경에 따라 표시되지 않을 수 있습니다.
@@ -62,6 +62,8 @@ npm run check
 npm run package
 ```
 
-패키지: `dist/insta-pick-0.2.4.zip`. 상세 구조는 [설계 문서](docs/architecture.md), 검증 범위는 [검증 기록](docs/verification.md)을 참고하세요.
+패키지: `dist/insta-pick-0.2.5.zip`. 상세 구조는 [설계 문서](docs/architecture.md), 검증 범위는 [검증 기록](docs/verification.md)을 참고하세요.
 
 Chrome API 근거: [scripting](https://developer.chrome.com/docs/extensions/reference/api/scripting), [downloads](https://developer.chrome.com/docs/extensions/reference/api/downloads), [storage](https://developer.chrome.com/docs/extensions/reference/api/storage).
+
+- v0.2.5: 전체 저장도 개별 저장과 같은 기본 다운로드 아이콘을 사용하며 우측 위 숫자 배지로 전체 개수를 표시한다. 화면에 보이는 게시물마다 한 번 정보를 읽으며, 확인되지 않은 개수는 `…`로 표시한다. 릴스는 배지 없이 버튼 하나다.

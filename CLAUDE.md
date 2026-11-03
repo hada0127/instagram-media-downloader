@@ -23,3 +23,5 @@
 - Final v0.2.3 refinement: move the all-download arrow left and match the two right strokes to its shaft weight. Re-measure alpha bounds when replacing PNGs.
 
 - v0.2.4 replaces short right ticks with closely grouped, equal-length/weight shaft strokes stepped upward; one arrowhead remains. See docs/icon-prompts.md.
+
+- v0.2.5: 전체 저장도 개별 저장과 같은 기본 다운로드 아이콘을 사용하며 우측 위 숫자 배지로 전체 개수를 표시한다. 화면에 보이는 게시물마다 한 번 정보를 읽으며, 확인되지 않은 개수는 `…`로 표시한다. 릴스는 배지 없이 버튼 하나다.
