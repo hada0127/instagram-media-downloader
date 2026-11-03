@@ -25,8 +25,10 @@ export function normalizeItems(items) {
 }
 
 export function captionPrefix(value) {
-  const clean = String(value || '').normalize('NFC').replace(/\s+/g, ' ')
-    .replace(/[<>:"/\\|?*\x00-\x1f\x7f]/g, '').replace(/^[. ]+|[. ]+$/g, '');
+  const clean = String(value || '').normalize('NFC')
+    // Remove keycap emoji as a unit so their digits do not leak into the name.
+    .replace(/[#*0-9]\uFE0F?\u20E3/gu, '')
+    .replace(/[^\p{L}\p{N}\s]/gu, '').replace(/\s+/g, ' ').trim();
   let prefix = [...new Intl.Segmenter('ko', {granularity:'grapheme'}).segment(clean)]
     .slice(0, 10).map(part => part.segment).join('').replace(/[. ]+$/g, '');
   // A reserved Windows device name before a dot remains reserved with a suffix.
@@ -37,7 +39,7 @@ export function captionPrefix(value) {
 export function filename(item) {
   const path = new URL(item.url).pathname;
   const extension = item.type === 'video' ? 'mp4' : (path.match(/\.(jpe?g|png|webp|avif)$/i)?.[1].toLowerCase() || 'jpg');
-  const post = String(item.post || 'post').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 80) || 'post';
+  const post = String(item.post || 'post').replace(/[^a-zA-Z0-9]/g, '').slice(0, 80) || 'post';
   const prefix = captionPrefix(item.caption) || post;
   return `${prefix}_${String(item.index).padStart(2, '0')}.${extension}`;
 }

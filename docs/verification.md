@@ -156,3 +156,34 @@ Built-in generated PNG visually inspected: longer, closely grouped right shafts,
 ## v0.2.6 — default download folder
 
 Changed existing filename expectations to basenames: npm test first failed four filename tests against old Instagram/post paths. Removed the directory prefix in filename(); npm test then passed all 21 tests. npm run check and npm run package exited 0. Chrome reload readback changed 0.2.5 to 0.2.6, enabled. No new real media download performed; filesystem delivery is not re-verified. Existing files remain in their original directories.
+
+## v0.2.7 — feed singleton video (2026-11-03)
+
+- Source baseline: 8f96ca8; local v0.2.7 working tree. macOS ego 0.6.1.13, guide 2.1.0.
+- Reproduction: serve repository with `python3 -m http.server 8769 --bind 127.0.0.1`, open `/tests/inline-fixture.html?mode=single-video` using `ego-browser nodejs`. Before fix: `{visibleButtons:2,badge:'1'}`. After fix: `{visibleButtons:1}`, mock save `[["3"]]`. Default mixed carousel: `{carouselButtons:2}`, mock whole-post save `[["1","2","3"]]`. These are selection tests, not file delivery.
+- One reload initially reused cached JS (wait timeout, exit 1; inspection confirmed old source). Disabled cache for the test page through CDP and reloaded; subsequent verification rounds exit 0.
+- Separate report of missing button on the dedicated reel page remains unresolved: on a live Instagram reel, locally injected runtime with downloads disabled showed `{buttonCount:1,gap:16,centerDelta:0,hit:true}`. Home → Reels navigation also showed `{reelToolbars:1}`. This does not verify Chrome's installed extension or the user's specific reel. Requested its URL.
+- `npm test`: exit 0, tests 21 / pass 21 / fail 0. `npm run check`: exit 0. `npm run package`: exit 0, `dist/insta-pick-0.2.7.zip`.
+- ego_space_name: harness-qa-browser-headless-insta-single-20261103-fix; ego_space_id:30; finish_ok:true (once); spaces_remaining:0 after immediate follow-up query; handoff:false; foreground non-interference unverified. Ego update notice observed; no upgrade performed.
+- Local HTTP server stopped. Chrome extension has not been reloaded for v0.2.7. No commit, push or release performed in this continuation.
+
+
+### v0.2.7 follow-up — feed video overlay resolved
+
+The user clarified that the missing button was in the screen opened by clicking a feed video. Direct opening did not reproduce it. A real feed video click reproduced: main video count 3, total video count 4, reel toolbars 0. The overlay video was outside main and not in a role=dialog. Changed the scanner from main video to video, preserving the single-video ancestor and viewport-center checks.
+
+Final ego-browser nodejs live feed → overlay verification (exit 0): {outsideMain:true,buttons:1,gap:16,centerDelta:0,light:true,hit:true}. Screenshot inspected: white download icon above Like on the dark overlay. Closing it removed its toolbar (overlayCleanup:true). Live verification used locally injected runtime with downloads disabled, not Chrome's installed extension. The supplied reel was checked directly; feed-overlay reproduction used another available feed video with the same layout. No real file was downloaded.
+
+Regression fixture ?mode=reel-overlay: video outside main, buttons 1, gap 16, light true; mock save [["3"]]. Final checks: single-video buttons 1/count 1; mixed carousel buttons 2/count 3. npm test 21 passed/0 failed; npm run check and npm run package exit 0. Package v0.2.7.
+
+Mac ego 0.6.1.13/guide 2.1.0; ego_space_name=harness-qa-browser-auth-insta-missing-20261103; ego_space_id=31; finish_ok=true (once); spaces_remaining=0; handoff=false; foreground non-interference unverified. Two intermediate video clicks failed (exit 1: zero-size video, then presentation element intercept); observed screenshot and clicked its visible video surface. Final validation rounds exit 0. Temporary screenshot inspected then removed; local HTTP server stopped. Chrome extension requires reload followed by Instagram page refresh. No push/release performed.
+
+
+## v0.2.8 — filename text only
+
+Updated filename tests first: npm test exited 1 (19 pass / 2 fail), proving emoji and punctuation were preserved by the old implementation. After filtering: npm test exit 0 (21 pass / 0 fail), npm run check and npm run package exit 0. Tests cover family emoji, flags, skin tones, keycap digits, punctuation-only captions, Japanese/Korean text and sanitized fallback post codes. Symbols are removed before the ten-character limit. Sequence underscore and extension dot remain. Package: dist/insta-pick-0.2.8.zip. No browser download was performed; Chrome reload and Instagram page refresh are required. Existing downloaded files are unchanged.
+
+
+## v0.2.9 — generated extension app icon
+
+Built-in image_gen output and 128px runtime asset visually inspected. Source copied into docs/assets; sips produced 16/32/48/128px PNGs. Python/Pillow and zipfile validation confirmed each exact dimension, RGBA, manifest icons/action.default_icon path and ZIP inclusion. npm test exit 0 (21 pass, 0 fail), npm run check and npm run package exit 0. No new browser QA; installed Chrome icon appearance requires extension reload and remains unverified. Prompts and alpha limitation recorded in icon-prompts.md.

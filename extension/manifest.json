@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Insta Pick · 사진과 영상 저장",
-  "version": "0.2.6",
+  "name": "__MSG_appName__",
+  "version": "0.2.10",
   "minimum_chrome_version": "102",
-  "description": "열린 인스타그램 게시물의 사진과 영상을 개별, 선택 또는 전체 다운로드합니다.",
+  "description": "__MSG_appDescription__",
   "permissions": [
     "activeTab",
     "scripting",
@@ -12,7 +12,13 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Insta Pick"
+    "default_title": "Insta Pick",
+    "default_icon": {
+      "16": "assets/icon-16.png",
+      "32": "assets/icon-32.png",
+      "48": "assets/icon-48.png",
+      "128": "assets/icon-128.png"
+    }
   },
   "background": {
     "service_worker": "background.js",
@@ -44,5 +50,12 @@
         "https://instagram.com/*"
       ]
     }
-  ]
+  ],
+  "icons": {
+    "16": "assets/icon-16.png",
+    "32": "assets/icon-32.png",
+    "48": "assets/icon-48.png",
+    "128": "assets/icon-128.png"
+  },
+  "default_locale": "en"
 }

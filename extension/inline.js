@@ -45,7 +45,7 @@ export function mountInlineButtons() {
     const shadow = host.attachShadow({mode:'open'});
     shadow.innerHTML = `<style>
       :host{color-scheme:light;font:12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-      :host([data-reel="true"]) .all{display:none}
+      :host([data-reel="true"]) .all,:host([data-single-video]) .all{display:none}
       .bar{display:flex;align-items:center;gap:0;flex-wrap:nowrap;padding:0;color:inherit}
       button{position:relative;appearance:none;border:0;border-radius:0;background:transparent;color:inherit;padding:0;width:40px;height:40px;display:grid;place-items:center;font:600 12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;cursor:pointer}
       button:hover{opacity:.6}button:disabled{opacity:.5;cursor:wait}button:focus-visible{outline:2px solid #6677ef;outline-offset:2px}
@@ -64,11 +64,14 @@ export function mountInlineButtons() {
     const badge = shadow.querySelector('.count');
     function showCount(result) {
       const count = result.total || (result.complete ? result.items.length : 0);
+      // Feed reels may use /p/ links; media data determines whether All is redundant.
+      host.toggleAttribute('data-single-video',result.complete && count === 1 && result.items.length === 1 && result.items[0].type === 'video');
       badge.textContent = count ? String(count) : '…';
       const label = count ? `게시물 전체 ${count}개 저장` : '게시물 전체 저장 (개수 확인 안 됨)';
       const button = shadow.querySelector('.all');
       button.title = label;
       button.setAttribute('aria-label',label);
+      place();
     }
     async function updateCount() {
       if (reel) return;
@@ -77,6 +80,7 @@ export function mountInlineButtons() {
       if (!currentPath || countPath === currentPath || rect.bottom <= 0 || rect.top >= innerHeight) return;
       countPath = currentPath;
       badge.textContent = '…';
+      host.removeAttribute('data-single-video');
       try {
         const result = await collectMedia({postPath:currentPath,scopeId});
         if (host.isConnected && postPath(root) === currentPath) showCount(result);
@@ -90,7 +94,7 @@ export function mountInlineButtons() {
       if (!target) { host.style.setProperty('display','none','important'); return; }
       host.style.setProperty('display','block','important');
       const base = root.getBoundingClientRect(), anchor = target.getBoundingClientRect();
-      const width = reel ? 40 : 80;
+      const width = reel || host.hasAttribute('data-single-video') ? 40 : 80;
       // Reel: same column, above Like. Feed: immediately left of Bookmark.
       const columnLeft=anchor.left-base.left+(anchor.width-40)/2;
       const left = reel ? columnLeft : columnLeft-width;
@@ -148,7 +152,8 @@ export function mountInlineButtons() {
     articles.forEach(attach);
     // Reel cards have no article. Find the smallest per-video ancestor with its like action.
     if (/^\/reels?(?:\/|$)/.test(location.pathname)) {
-      for (const video of document.querySelectorAll('main video')) {
+      // Feed video clicks open a reel overlay outside main.
+      for (const video of document.querySelectorAll('video')) {
         for (let root=video.parentElement; root && root.tagName !== 'MAIN'; root=root.parentElement) {
           if (root.querySelectorAll('video').length > 1) break;
           if (action(root,true)) {attach(root);break;}

@@ -54,3 +54,14 @@ Exact edit prompt:
 ## v0.2.5 — count badge
 
 Both controls now use the original `download-one.png`. The all-download badge is live HTML text styled with CSS; the previous generated all-download variants are no longer rendered. No new image generation was needed.
+
+
+## v0.2.9 extension app icon
+
+Tool: built-in image_gen (two calls), no API CLI. Source: docs/assets/app-icon-source.png. Runtime: extension/assets/icon-{16,32,48,128}.png. Resized with macOS sips -z N N; original generated alpha preserved. This is the extension toolbar/management icon, separate from inline download buttons.
+
+Generation prompt: Use case logo-brand; production Chrome extension icon for Insta Pick, an Instagram photo/video downloader. One polished simple square app icon, not a mockup/sheet. Bold white downward arrow and shallow rounded tray on a violet-magenta-coral gradient rounded-square tile; flat design, rounded endings, readable at 16px, tile roughly 90 percent of canvas, transparent corners. No text, camera details, numerals, badge, extra arrows, perspective, shadows or border.
+
+Final edit prompt (built-in, referencing first generated image): Refine this exact icon for production. Preserve the white download arrow and tray, saturated violet-magenta-coral rounded square tile, proportions and composition. Change ONLY edge cleanliness: remove ALL colored specks, noise, stray pixels and fragments outside the rounded square. Outside the tile must be perfectly empty fully transparent alpha. Sharp smooth antialiased rounded tile boundary. Tile occupies 90% of square image with clean uniform transparent margin. Flat graphic app icon, no shadows, no new elements. Keep the interior clean smooth gradient.
+
+The final generated PNG retains very low-alpha pixels outside the tile (top 40 source rows alpha range 0–1/255); original alpha was preserved rather than claiming exact zero. Chrome manifest fields checked against https://developer.chrome.com/docs/extensions/reference/manifest/icons and https://developer.chrome.com/docs/extensions/reference/api/action.

@@ -28,10 +28,12 @@ test('caption prefix uses ten readable characters and two-digit post order', () 
 });
 test('filename strips forbidden characters, control codes and trailing dots', () => {
   assert.equal(filename({...image,caption:'  여행:/사진*?<>"|\\\u0000\n좋다... ',index:1}),'여행사진 좋다_01.jpg');
-  assert.equal(filename({...image,caption:'CON.txt',index:1}),'_CON.txt_01.jpg');
+  assert.equal(filename({...image,caption:'CON.txt',index:1}),'CONtxt_01.jpg');
 });
-test('caption handles composed emoji and empty captions', () => {
-  assert.equal(filename({...image,caption:'👩‍👩‍👧‍👦가나다라마바사아자차',index:1}),'👩‍👩‍👧‍👦가나다라마바사아자_01.jpg');
+test('caption removes emoji and symbols before taking ten characters', () => {
+  assert.equal(filename({...image,caption:'👩‍👩‍👧‍👦가나다라마바사아자차',index:1}),'가나다라마바사아자차_01.jpg');
   assert.equal(filename({...image,caption:'<>:/...',index:1}),'ABC_01.jpg');
+  assert.equal(filename({...image,caption:'色集め🐟水族館! #수족관✨',index:1}),'色集め水族館 수족관_01.jpg');
+  assert.equal(filename({...image,caption:'1️⃣🇰🇷👍🏽©™★_-=+😀',post:'A-B_C',index:1}),'ABC_01.jpg');
   assert.equal(normalizeItems([{...image,caption:'본문',index:3}])[0].caption,'본문');
 });

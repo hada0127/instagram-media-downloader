@@ -3,6 +3,25 @@
 <main><article><header><a href="/p/ABC/"><time>테스트 게시물 · 사진 2 + 영상 1</time></a></header><div class="viewport"><div class="slides"><img src="https://cdninstagram.com/1.jpg" alt="첫 사진"><img src="https://cdninstagram.com/2.jpg" alt="두 번째 사진"><video src="blob:test" poster="https://cdninstagram.com/3.jpg"></video></div></div><div style="display:flex;justify-content:flex-end;padding:10px"><button aria-label="저장" style="border:0;background:transparent;padding:8px;width:40px;height:40px;display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111418" stroke-width="2" stroke-linejoin="round"><path d="M5 3h14v18l-7-6-7 6z"/></svg></button></div><div class="nav"><button id="first">첫 사진</button><button id="second">두 번째 사진</button><button id="third">세 번째 영상</button></div><p>모의 게시물 · 실제 다운로드가 발생하지 않습니다.</p></article></main>
 <script type="application/json">{"code":"ABC","carousel_media":[{"pk":"1","media_type":1,"image_versions2":{"candidates":[{"url":"https://cdninstagram.com/1.jpg","width":1080,"height":1080}]}},{"pk":"2","media_type":1,"image_versions2":{"candidates":[{"url":"https://cdninstagram.com/2.jpg","width":1080,"height":1080}]}},{"pk":"3","media_type":2,"image_versions2":{"candidates":[{"url":"https://cdninstagram.com/3.jpg","width":1080,"height":1080}]},"video_versions":[{"url":"https://cdninstagram.com/3.mp4","width":1080,"height":1080}]}]}</script>
 <script type="module">
+const mode = new URLSearchParams(location.search).get('mode');
+if (mode === 'single-video' || mode === 'reel-overlay') {
+  const data = document.querySelector('script[type="application/json"]');
+  const post = JSON.parse(data.textContent);
+  data.textContent = JSON.stringify({code:post.code,...post.carousel_media[2]});
+  document.querySelectorAll('.slides img').forEach(image=>image.remove());
+}
+if (mode === 'reel-overlay') {
+  const article = document.querySelector('article');
+  const card = document.createElement('section');
+  card.innerHTML = article.innerHTML;
+  document.querySelector('main').replaceChildren();
+  card.style.cssText = 'position:fixed;inset:0;background:#101418;color:white';
+  const anchor = card.querySelector('[aria-label="저장"]');
+  anchor.setAttribute('aria-label','좋아요');
+  anchor.style.color = 'white';
+  document.body.append(card);
+  history.replaceState(null,'','/reels/ABC/');
+}
 window.saved=[];
 window.chrome={runtime:{getURL:path=>'/extension/'+path,sendMessage:async message=>{window.saved.push(message.items.map(x=>x.id));return {results:message.items.map((x,i)=>({id:x.id,downloadId:i+1}))};}}};
 for(const [id,x] of [['first',0],['second',600],['third',1200]]) document.getElementById(id).onclick=()=>{document.querySelector('.slides').style.transform=`translateX(-${x}px)`;};
