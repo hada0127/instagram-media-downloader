@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Insta Pick</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+<header><span class="brand">↘</span><div><h1>Insta Pick</h1><p>마음에 드는 순간을, 한 번에.</p></div><span class="badge">LOCAL</span></header>
+<main>
+<section class="intro"><h2>사진도, 영상도 골라서 저장</h2><p>인스타그램 게시물이나 릴스를 열고 아래 버튼을 눌러 줘.</p><button id="scan" class="primary">게시물 읽어 오기 <span>↻</span></button></section>
+<p id="notice" role="status" aria-live="polite">목록을 읽으면 개별·선택·전체 저장을 할 수 있어.</p>
+<div id="toolbar" hidden><label><input id="select-all" type="checkbox"> 전체 선택</label><span id="count"></span></div>
+<div id="grid"></div>
+<div id="empty"><span>▧</span><strong>저장할 순간을 골라 봐</strong><p>사진과 영상 미리보기가 여기에 표시돼.</p></div>
+</main>
+<footer><div class="actions"><button id="selected" class="primary" disabled>선택 저장 (0)</button><button id="all" disabled>전체 저장</button></div><p>저장 위치: 다운로드 / Instagram / 게시물 번호</p><button id="history" class="link">Chrome 다운로드 내역 열기 ↗</button></footer>
+<script type="module" src="popup.js"></script>
+</body></html>

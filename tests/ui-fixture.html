@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8"><title>Insta Pick UI fixture</title>
+<script type="module">
+const html = await (await fetch('/extension/popup.html')).text();
+document.documentElement.innerHTML = html.replace('href="popup.css"','href="/extension/popup.css"').replace('<script type="module" src="popup.js"></'+'script>','');
+const callbacks = []; const saved = []; let nextId = 1;
+window.fixture = {saved};
+const cache = {};
+window.chrome = {
+ storage:{session:{get:async key=>({[key]:cache[key]}),set:async value=>Object.assign(cache,value)}},
+ tabs:{query:async()=>[{id:1,url:'https://www.instagram.com/p/TEST/'}],create:async options=>options},
+ scripting:{executeScript:async()=>[{result:{source:'post',warning:'테스트 데이터 · 실제 인스타그램 연결 아님',items:[
+ {id:'1',type:'image',url:'https://cdninstagram.com/1.jpg',post:'TEST'},
+ {id:'2',type:'video',url:'https://cdninstagram.com/2.mp4',post:'TEST'},
+ {id:'3',type:'image',url:'https://cdninstagram.com/3.jpg',post:'TEST'}]}}]},
+ runtime:{sendMessage:async message=>{saved.push(message.items.map(x=>x.id));return {results:message.items.map(x=>({id:x.id,downloadId:nextId++}))};}},
+ downloads:{onChanged:{addListener:fn=>callbacks.push(fn)},search:async ({id})=>[{id,state:'complete'}]}
+};
+await import('/extension/popup.js');
+</script>
