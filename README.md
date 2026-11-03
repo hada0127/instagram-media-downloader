@@ -73,3 +73,5 @@ Chrome API 근거: [scripting](https://developer.chrome.com/docs/extensions/refe
 [개인정보처리방침 / Privacy policy](PRIVACY.md) · [지원 및 문제 신고](https://github.com/hada0127/instagram-media-downloader/issues)
 
 Insta Pick은 Instagram·Meta와 제휴하거나 승인을 받은 공식 제품이 아닙니다. 본인 소유 또는 저장 허락을 받은 콘텐츠에만 이용해 주세요. 스토어 설명의 번역 언어와 별개로 현재 팝업·페이지 버튼의 안내 문구는 한국어입니다.
+
+Chrome 웹 스토어 등록은 2026-11-03에 v0.2.10 심사를 신청했으며, 당시 상태는 검토 대기 중입니다. 아직 승인·공개 완료로 안내하지 않습니다.

@@ -187,3 +187,8 @@ Updated filename tests first: npm test exited 1 (19 pass / 2 fail), proving emoj
 ## v0.2.9 — generated extension app icon
 
 Built-in image_gen output and 128px runtime asset visually inspected. Source copied into docs/assets; sips produced 16/32/48/128px PNGs. Python/Pillow and zipfile validation confirmed each exact dimension, RGBA, manifest icons/action.default_icon path and ZIP inclusion. npm test exit 0 (21 pass, 0 fail), npm run check and npm run package exit 0. No new browser QA; installed Chrome icon appearance requires extension reload and remains unverified. Prompts and alpha limitation recorded in icon-prompts.md.
+
+
+## v0.2.10 — store submission
+
+Revision f8b2988. npm test 21/21 passed; npm run check, npm run package, git diff --check exit 0. ZIP validated with 56 runtime files including 40 locale message files; descriptions <=132 characters and default locale en. Store screenshot is 1280x800 RGB, showing the actual popup initial state, captured through ego and visually inspected. All 40 remote listing descriptions read back equal to local source after reload. Store submitted 2026-11-03, item eccbhihhmghhdfcjjcfmjceombbfmhbd, status 검토 대기 중. Approval/public availability remain unverified; this is a submission receipt only. See store-submission.md for lifecycle and evidence.

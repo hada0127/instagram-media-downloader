@@ -32,4 +32,14 @@ The extension processes website content (captions, media/thumbnail URLs, media m
 4. Alternatively open the extension popup and click “게시물 읽어 오기” (read post), select items and use “선택 저장” (save selected) or “전체 저장” (save all). Files go to Chrome's default download folder.
 5. Check Chrome download history for completion. Incomplete/unsupported collections display an error instead of pretending a whole post was saved. Instagram may require login and may change its endpoints.
 
-Status: preparation; submission status must be read back from the dashboard before claiming review submission.
+Status (2026-11-03): submitted for review. Dashboard readback: “상태: 검토 대기 중” and “초안이 검토 대기 중입니다”. Not approved/published yet. Automatic publication after approval was checked in the submit dialog. Free/public, all available regions selected.
+
+Item ID: eccbhihhmghhdfcjjcfmjceombbfmhbd
+Package revision: f8b2988 (v0.2.10)
+ZIP SHA-256: 05b95c10f3946af13958e8e75f8bd61f58fc0e9a7b72562fab966c327697d429
+
+40 localized descriptions were read back after reload and matched docs/store-listings.json (checked:40, matched:40, mismatches:[]). The console uses iw internally for the displayed he locale; manifest locale remains he. Both website content and current-URL/web-history handling were declared; the no-sale/unrelated-use/creditworthiness certifications were selected. Remote code: No. Privacy URL read back and publicly returned HTTP 200. Review instructions saved without credentials; reviewers use their own authorized Instagram session.
+
+Mac ego-browser nodejs, ego 0.6.1.13/guide 2.1.0. Space: harness-qa-upload-insta-store-20261103 (32). Initial Google reauthentication was handed to the user, then resumed after confirmation. Final upload/save/readback/submission/status rounds exited 0. Intermediate selector/transition waits failed; DOM inspection showed delayed menu transitions and some unsaved locales. Missing descriptions were saved with observation of each new saving→saved transition, then all 40 were matched after reload. Final submission confirmation: “검토를 위해 확장 프로그램을(를) 제출함”, followed by the pending-review status above.
+
+finish_ok:true, called once; spaces_remaining:0 on immediate follow-up query. No browser tabs or local HTTP server left running for this task. Foreground non-interference unverified. Ego upgrade notice observed; no upgrade performed.

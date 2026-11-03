@@ -35,3 +35,5 @@
 - v0.2.9: 이미지젠으로 생성한 확장 앱 아이콘을 manifest icons와 action.default_icon에 연결한다. runtime assets/icon-{16,32,48,128}.png; 원본 docs/assets/app-icon-source.png. 페이지 안 저장 버튼과는 별도 자산이다.
 
 - v0.2.10: 스토어 등록 준비. manifest metadata는 _locales 40개 언어·기본 en, 실제 UI는 한국어. PRIVACY.md와 docs/store-listings.json이 공개 정책·설명 정본이다. 팝업은 기본 다운로드 경로와 비제휴·저장권한 안내를 표시한다. 심사 제출 상태는 콘솔을 읽어 확인하기 전 완료라고 하지 않는다.
+
+- 2026-11-03: Chrome Web Store item eccbhihhmghhdfcjjcfmjceombbfmhbd, v0.2.10 심사 제출 완료. 콘솔 실측 상태는 검토 대기 중이며 승인·공개 완료가 아니다. 무료·공개·승인 후 자동 게시, 설명 40개 언어. 상세 docs/store-submission.md.
