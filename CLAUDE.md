@@ -7,3 +7,5 @@
 - Undocumented Instagram endpoint and web app ID are unverified compatibility assumptions; keep failures visible and partial scans labeled.
 - Keep this file, CLAUDE.md, and README limitations consistent when behavior changes.
 - Public GitHub repository: hada0127/instagram-media-downloader. Artifacts contain only extension runtime files.
+
+- Local Chrome unpacked installation confirmed on 2026-11-03. Keep `extension/` in place; actual Instagram downloads remain unverified.

@@ -54,3 +54,17 @@ spaces_remaining: 0
 4. 개별·선택·전체 저장을 각각 누르고 `chrome://downloads`의 완료 상태와 저장 파일 내용을 확인한다.
 5. 부분 목록 경고가 나오면 다음 장으로 이동 후 다시 읽어 중복 없이 누적되는지 확인한다.
 6. 다운로드 도중 팝업을 닫고 Chrome 다운로드 내역에서 완료 여부를 확인한다.
+
+## 추가 설치 확인 — 2026-11-03
+
+사용자의 명시적 Chrome 설치 요청에 따라 `orca computer`로 Chrome의 `chrome://extensions`에서 개발자 모드를 켜고 로컬 `extension/` 폴더를 로드했다. 설치 폴더는 이동하거나 삭제하지 않는다.
+
+확인 명령: `orca computer get-app-state --app com.google.Chrome --window-id 9920 --no-screenshot --json` (exit 0). 실제 접근성 출력:
+
+```text
+항목 Insta Pick · 사진과 영상 저장
+텍스트, Value: 0.1.0
+전환 (settable) 켜짐, 확장 프로그램 사용 설정됨, Value: 1
+```
+
+이는 설치·활성화 확인이며 Instagram 수집·실제 다운로드 검증을 의미하지 않는다. 파일 선택 창에서 백그라운드 입력이 거부되어 사전 안내 후 `--restore-window`로 경로를 지정했다. 다른 확장이나 사용자 탭은 변경하지 않았다.
