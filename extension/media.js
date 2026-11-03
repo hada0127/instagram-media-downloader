@@ -39,5 +39,5 @@ export function filename(item) {
   const extension = item.type === 'video' ? 'mp4' : (path.match(/\.(jpe?g|png|webp|avif)$/i)?.[1].toLowerCase() || 'jpg');
   const post = String(item.post || 'post').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 80) || 'post';
   const prefix = captionPrefix(item.caption) || post;
-  return `Instagram/${post}/${prefix}_${String(item.index).padStart(2, '0')}.${extension}`;
+  return `${prefix}_${String(item.index).padStart(2, '0')}.${extension}`;
 }

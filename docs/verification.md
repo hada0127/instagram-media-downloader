@@ -152,3 +152,7 @@ Built-in generated PNG visually inspected: longer, closely grouped right shafts,
 - Mac ego-browser nodejs (exit 0), ego 0.6.1.13, space 29, ego_space_name=harness-qa-browser-headless-insta-badge-20261103. Fixture displayed badge 3 and accessible label 게시물 전체 3개 저장; click produced saved=[[1,2,3]] (string IDs). Screenshot dist/badge-qa.png visually inspected, removed after verification. This is mocked download selection, not real file delivery.
 - finish_ok=true, spaces_remaining=0, handoff=false. Foreground non-interference unverified. Final badge not verified on real Instagram.
 - Chrome reload readback changed 0.2.4 to 0.2.5 and remained enabled. Refresh Instagram pages.
+
+## v0.2.6 — default download folder
+
+Changed existing filename expectations to basenames: npm test first failed four filename tests against old Instagram/post paths. Removed the directory prefix in filename(); npm test then passed all 21 tests. npm run check and npm run package exited 0. Chrome reload readback changed 0.2.5 to 0.2.6, enabled. No new real media download performed; filesystem delivery is not re-verified. Existing files remain in their original directories.
