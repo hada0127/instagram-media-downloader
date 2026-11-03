@@ -133,3 +133,11 @@ spaces_remaining: 0
 - finish_ok:true; spaces_remaining:0; handoff:false; 전면 비점유 unverified
 - 검증용 스크린샷은 시각 확인 후 삭제했다.
 - 최종 Chrome 설치본 다시 로드: `0.2.2`, `켜짐, 확장 프로그램 사용 설정됨, Value:1`. 갱신 전용 창 종료.
+
+
+## 0.2.3 final icon refinement — 2026-11-03
+
+- Built-in image_gen output inspected: single arrowhead shifted left, two thicker stepped right strokes. Runtime PNG replaced; CSS regenerated from measured alpha bounds (196,230,1058,1069), fitting a 22px glyph.
+- npm test: 21 passed, 0 failed. npm run check and npm run package: exit 0, dist/insta-pick-0.2.3.zip.
+- Earlier stepped variant fixture: ego_space_name=harness-qa-browser-headless-insta-final-icons-20261103, spaceId=27, icons=2, loaded=true, opacity=1; finish_ok=true, spaces_remaining=0. Final refinement inspected as an asset, no new browser QA run.
+- Chrome page confirms 0.2.3 enabled after reload click; AXPress returned unverified/accessibility_action_unasserted, so actual new-asset loading in Instagram remains unverified. Refresh Instagram tabs.
