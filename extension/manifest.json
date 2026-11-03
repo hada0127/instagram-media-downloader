@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Insta Pick · 사진과 영상 저장",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "minimum_chrome_version": "102",
   "description": "열린 인스타그램 게시물의 사진과 영상을 개별, 선택 또는 전체 다운로드합니다.",
   "permissions": [

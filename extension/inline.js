@@ -49,7 +49,10 @@ export function mountInlineButtons() {
       .bar{display:flex;align-items:center;gap:0;flex-wrap:nowrap;padding:0;color:inherit}
       button{appearance:none;border:0;border-radius:0;background:transparent;color:inherit;padding:0;width:40px;height:40px;display:grid;place-items:center;font:600 12px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;cursor:pointer}
       button:hover{opacity:.6}button:disabled{opacity:.5;cursor:wait}button:focus-visible{outline:2px solid #6677ef;outline-offset:2px}
-      img{width:34px;height:34px;display:block;pointer-events:none;filter:brightness(0)}
+      img{display:block;pointer-events:none;filter:brightness(0)}
+      /* Measured alpha bounds; reproduce with scripts/measure-icons.py. */
+      .one img{width:32.267px;height:32.267px;transform:translate(0.013px,-0.579px)}
+      .all img{width:32.191px;height:32.191px;transform:translate(0.013px,-0.590px)}
       :host([data-light-icons]) img{filter:brightness(0) invert(1)}
       .status{position:absolute;right:0;top:44px;display:none;width:220px;padding:8px 10px;background:#fff;border:1px solid #e9e9ee;border-radius:8px;box-shadow:0 2px 8px #0002;font-size:11px;line-height:1.5;overflow-wrap:anywhere}.status:not(:empty){display:block}
     </style><div class="bar"><button class="one" type="button" title="현재 사진·영상 저장" aria-label="현재 항목 저장"><img alt="" aria-hidden="true"></button><button class="all" type="button" title="게시물 전체 저장" aria-label="게시물 전체 저장"><img alt="" aria-hidden="true"></button><span class="status" role="status" aria-live="polite"></span></div>`;
@@ -63,7 +66,8 @@ export function mountInlineButtons() {
       const base = root.getBoundingClientRect(), anchor = target.getBoundingClientRect();
       const width = reel ? 40 : 80;
       // Reel: same column, above Like. Feed: immediately left of Bookmark.
-      const left = reel ? anchor.left-base.left+(anchor.width-width)/2 : anchor.left-base.left-width;
+      const columnLeft=anchor.left-base.left+(anchor.width-40)/2;
+      const left = reel ? columnLeft : columnLeft-width;
       const top = reel ? anchor.top-base.top-56 : anchor.top-base.top+(anchor.height-40)/2;
       host.style.setProperty('left',`${Math.max(0,left)}px`,'important');
       host.style.setProperty('right','auto','important');

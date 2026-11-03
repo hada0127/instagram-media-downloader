@@ -121,3 +121,15 @@ spaces_remaining: 0
 - Chrome 설치본은 최종 파일 변경 후 다시 로드했고 `0.2.1`, `켜짐, 확장 프로그램 사용 설정됨, Value:1`을 확인했다. 갱신용으로 만든 Chrome 창은 닫았다.
 
 최종 검사: `npm test` exit 0 (21 passed, 0 failed), `npm run check` exit 0, `npm run package` exit 0. `sips -g hasAlpha` 두 PNG 모두 yes. ZIP에 런타임 파일 12개(이미지 포함)만 들어 있음을 확인했다.
+
+## v0.2.2 — 아이콘 형태와 크기 통일
+
+사용자 수정: 다른 문서 모양 대신 같은 트레이/줄기에서 화살촉 한 줄·두 줄로 구분한다. 이미지젠으로 단일 저장 아이콘을 참조해 전체 저장 아이콘을 다시 생성했다. 실제 PNG의 알파 영역을 측정해 둘 다 22 CSS px의 시각적 크기 및 공통 중심에 맞췄다. 원본 픽셀은 수정하지 않았다. 측정 재현: `python3 scripts/measure-icons.py`.
+
+브라우저 모의 화면의 실제 출력: nativeIconBox=24, opacity=1, 이미지 둘 다 loaded=true, 버튼 중심 x=[890,930,969]. 첫 두 버튼 사이 40px, 즐겨찾기까지 39px(경계선에 의한 1px 차이). 스크린샷을 읽어 같은 트레이와 한 줄/두 줄 화살촉, 즐겨찾기와의 크기·정렬을 확인했다.
+
+- ego_space_name: harness-qa-browser-headless-insta-matched-icons-20261103
+- ego_space_id: 26; ego_version: 0.6.1.13; 실행 exit 0
+- finish_ok:true; spaces_remaining:0; handoff:false; 전면 비점유 unverified
+- 검증용 스크린샷은 시각 확인 후 삭제했다.
+- 최종 Chrome 설치본 다시 로드: `0.2.2`, `켜짐, 확장 프로그램 사용 설정됨, Value:1`. 갱신 전용 창 종료.

@@ -17,3 +17,4 @@
 - Filenames use sanitized caption's first 10 graphemes + _01 sequence in original post order; empty caption falls back to post code.
 - Reject /reels/audio/... as a post. A complete singleton video may identify a blob player with no poster. Prefer a visible video over its overlapping decorative backdrop.
 - The user-provided reel sample was verified as a downloaded MP4 with H.264 video and AAC audio; do not generalize that verification to all Instagram formats.
+- v0.2.2 icons share the same tray/shaft and differ only by one vs two downward chevrons. Size by measured alpha bounds, not PNG canvas; reproduce CSS with scripts/measure-icons.py.
