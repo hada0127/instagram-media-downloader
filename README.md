@@ -2,11 +2,11 @@
 
 인스타그램 게시물의 **사진·영상을 한 개씩, 선택한 항목만, 또는 전체 다운로드**하는 Chrome 확장 프로그램입니다.
 
-> **v0.2.0 미리보기 버전** — 자동 테스트와 모의 데이터 브라우저 UI 검증을 완료했습니다. Chrome 0.2.0 설치·활성화와 실제 Instagram 피드의 저장 버튼 표시를 확인했습니다. 실제 로그인된 Instagram에서 수집 및 파일 저장은 아직 검증하지 않았습니다. Instagram 비공식 웹 API 변경에 따라 수집이 실패할 수 있습니다.
+> **v0.2.1 미리보기 버전** — 일반 게시물·릴스 화면에 아이콘을 표시합니다. 자동 테스트 및 실제 릴스 1건의 MP4 영상·음성 파일을 확인했습니다. Instagram의 화면이나 비공식 데이터 형식이 바뀌면 수집이 실패할 수 있습니다.
 
 ## 설치
 
-1. [Releases](https://github.com/hada0127/instagram-media-downloader/releases)에서 `insta-pick-0.2.0.zip`을 내려받아 압축을 풉니다.
+1. [Releases](https://github.com/hada0127/instagram-media-downloader/releases)에서 `insta-pick-0.2.1.zip`을 내려받아 압축을 풉니다.
 2. Chrome 주소창에 `chrome://extensions`를 입력합니다.
 3. 오른쪽 위 **개발자 모드**를 켭니다.
 4. **압축해제된 확장 프로그램을 로드합니다**를 누르고 `manifest.json`이 들어 있는 폴더를 선택합니다.
@@ -16,14 +16,15 @@
 
 ## 사용
 
-**확장 팝업을 열지 않아도 게시물 화면 위에 저장 버튼이 나타납니다.** 업데이트 직후 이미 열려 있는 Instagram 탭은 한 번 새로고침합니다.
+**확장 팝업이나 호버 없이, Instagram의 기본 버튼 옆에 다운로드 아이콘이 항상 표시됩니다.** 업데이트 직후 이미 열려 있는 Instagram 탭은 한 번 새로고침합니다.
 
+- 일반 게시물의 **즐겨찾기 왼쪽**에는 개별 저장과 전체 저장 아이콘 두 개가 표시됩니다. 릴스의 **좋아요 위**에는 영상 저장 아이콘 하나만 표시됩니다. 아이콘 위에 마우스를 올리면 기능 설명을 확인할 수 있습니다.
 - **현재 항목 저장**: 현재 화면에 보이는 사진 또는 영상 하나를 저장합니다. 여러 장 게시물에서 다음 장으로 넘기면 그 항목을 저장합니다.
 - **게시물 전체 저장**: 해당 게시물의 사진·영상을 모두 개별 파일로 저장합니다.
 - 홈 피드의 게시물과 게시물 상세 화면에서 동작하며, 새로 로드된 게시물에도 버튼을 붙입니다. Instagram의 화면 구조 변경에 따라 표시되지 않을 수 있습니다.
 - 현재 항목을 확실하게 식별하지 못하면 첫 사진을 임의로 저장하지 않고 안내합니다. 전체 목록이 불완전하면 전체 저장을 시작하지 않습니다.
 
-저장 위치는 기본 다운로드 폴더의 `Instagram/게시물번호/`입니다. 시작 안내는 완료를 뜻하지 않으며, `chrome://downloads`에서 완료/실패를 확인합니다.
+저장 위치는 기본 다운로드 폴더의 `Instagram/게시물번호/`입니다. 파일명은 **본문 앞 10자_01.jpg** 또는 **본문 앞 10자_01.mp4** 형식이며, 게시물 순서대로 `01`, `02`를 붙입니다. Windows·macOS 금지 문자와 제어 문자는 제거하고 줄바꿈은 공백으로 정리합니다. 한글·이모지는 글자 단위로 유지합니다. 본문을 읽을 수 없거나 비어 있으면 게시물 번호를 사용합니다. 시작 안내는 완료를 뜻하지 않으며, `chrome://downloads`에서 완료/실패를 확인합니다.
 
 기존 확장 팝업도 사용할 수 있습니다. 게시물이나 릴스 상세 주소에서 **게시물 읽어 오기** 후 체크박스로 선택 저장합니다. 부분 수집 목록은 같은 탭에서 다시 읽으면 누적되고 브라우저 세션 종료 시 사라집니다.
 
@@ -61,6 +62,6 @@ npm run check
 npm run package
 ```
 
-패키지: `dist/insta-pick-0.2.0.zip`. 상세 구조는 [설계 문서](docs/architecture.md), 검증 범위는 [검증 기록](docs/verification.md)을 참고하세요.
+패키지: `dist/insta-pick-0.2.1.zip`. 상세 구조는 [설계 문서](docs/architecture.md), 검증 범위는 [검증 기록](docs/verification.md)을 참고하세요.
 
 Chrome API 근거: [scripting](https://developer.chrome.com/docs/extensions/reference/api/scripting), [downloads](https://developer.chrome.com/docs/extensions/reference/api/downloads), [storage](https://developer.chrome.com/docs/extensions/reference/api/storage).

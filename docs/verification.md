@@ -88,3 +88,36 @@ spaces_remaining: 0
 ```
 
 피드에서 위 버튼 묶음 3개가 관찰되었다. 이 확인은 사용자가 지정한 Chrome 설치본의 실제 표시 확인이며 ego 하네스 PASS로 대체하지 않는다. 실제 게시물 파일 다운로드는 아직 검증하지 않았다. 임의의 피드 콘텐츠를 다운로드하지 않았다.
+
+## v0.2.1 — 릴스 실측·파일명·아이콘
+
+최종 사용자 결정은 호버 없이 항상 표시, 일반 게시물은 즐겨찾기 왼쪽 두 아이콘, 릴스는 좋아요 위 한 아이콘이다. 중간 호버 버전 검증은 최종 동작으로 간주하지 않는다.
+
+### 재현과 수정
+
+실제 Chrome에서 사용자 제공 릴스의 저장 버튼을 눌렀을 때 `HTTP 400`을 재현했다. ego에서 해당 화면 DOM을 조사했더니 main의 첫 `/reels/` 링크가 `/reels/audio/...`였다. 기존 정규식은 이를 미디어 코드로 취급했다. 정확한 게시물 경로로 수집하면 `{type:video, complete:true}`가 반환되었다.
+
+추가 실측: video는 blob 소스이며 poster가 없고, 그 뒤 흐린 배경 img가 video보다 약간 크다. 기존 화면 선택기는 그 img를 선택했다. 이 상황을 단위 테스트에서 실패시킨 뒤 수정했다. 최종 페이지 버튼의 요청 대상은 제공된 릴스의 영상 한 개·index 1이었다. 다음 릴스로 이동해도 활성 카드의 버튼 묶음은 한 개였다.
+
+### 파일과 이름
+
+실제 미디어 요청 결과: HTTP 200, content-type `video/mp4`, 4,000,296 bytes, MP4 `ftyp` 시그니처.
+
+설치본 갱신 후 다운로드 폴더에 존재하는 해당 예제 파일에 `ffprobe -v error -show_entries stream=codec_type,codec_name,width,height -show_entries format=duration,size -of json <downloaded-file>`를 실행했다(exit 0):
+
+```json
+{"video":"h264","width":1080,"height":720,"audio":"aac","duration":"12.512698","size":"4000296"}
+```
+
+파일명은 실제 본문의 앞 10자 + `_01.mp4` 형식임을 확인했다. 사용자 파일은 보존했다. 이는 예제 1건에 대한 검증이며 모든 Instagram 영상 포맷을 보장하지 않는다. CDN 서명 URL과 개인 계정 정보는 기록하지 않았다.
+
+### 화면
+
+- 이미지젠 내장 도구로 생성한 투명 PNG 2개를 런타임 자산으로 사용. [프롬프트 및 경로](icon-prompts.md).
+- 실제 릴스 DOM에 최종 코드를 적용해 `icons:1`, 마우스가 밖에 있을 때 `opacity:1`, 좋아요와의 가로 중심선 차이 0, 좋아요 위 간격 16 CSS px 확인. 이미지 로드 확인 및 스크린샷 시각 검토 완료(검증용 임시 스크린샷은 삭제).
+- 일반 게시물 모의 화면에서 `icons:2`, `opacity:1`, 아이콘 이미지 로드 완료. 즐겨찾기 바로 왼쪽 배치와 두 번째 사진/세 번째 영상/전체 선택 요청 `[["2"],["3"],["1","2","3"]]` 확인.
+- ego_space_name: harness-qa-browser-auth-insta-reel-20261103, ego_space_id:25, ego_version:0.6.1.13. 마지막 finish 정확히 1회 완료. 첫 조회 잔여 1 → 직후 재조회 `spaces_remaining:0`. handoff:false. 전면 비점유는 unverified.
+- 중간 영상 선택 대기는 1회 timeout(exit 1)이었으며 상태를 읽어 배경 이미지 오인 원인을 확인한 후 수정했다. 최종 버튼 대상·레이아웃 확인 라운드는 exit 0.
+- Chrome 설치본은 최종 파일 변경 후 다시 로드했고 `0.2.1`, `켜짐, 확장 프로그램 사용 설정됨, Value:1`을 확인했다. 갱신용으로 만든 Chrome 창은 닫았다.
+
+최종 검사: `npm test` exit 0 (21 passed, 0 failed), `npm run check` exit 0, `npm run package` exit 0. `sips -g hasAlpha` 두 PNG 모두 yes. ZIP에 런타임 파일 12개(이미지 포함)만 들어 있음을 확인했다.

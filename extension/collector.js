@@ -1,7 +1,7 @@
 // Self-contained: chrome.scripting serializes this function without its module scope.
 export async function collectMedia(options = {}) {
   const pathname = options.postPath || location.pathname;
-  const match = pathname.match(/^\/(?:p|reel|reels|tv)\/([A-Za-z0-9_-]+)\/?/);
+  const match = pathname.match(/^\/(?:p|reel|reels|tv)\/([A-Za-z0-9_-]+)\/?$/);
   if (!match) return { items: [], warning: '저장할 게시물이나 릴스를 먼저 열어 줘. 주소에 /p/ 또는 /reel/이 있어야 해.' };
   const code = match[1];
   const items = [];
@@ -9,6 +9,7 @@ export async function collectMedia(options = {}) {
   const best = candidates => [...(candidates || [])].filter(x => x?.url)
     .sort((a, b) => (b.width || 0) * (b.height || 0) - (a.width || 0) * (a.height || 0))[0]?.url;
   function extract(post) {
+    const caption = typeof post.caption === 'string' ? post.caption : post.caption?.text || post.edge_media_to_caption?.edges?.[0]?.node?.text || '';
     const children = post.carousel_media || post.edge_sidecar_to_children?.edges?.map(edge => edge.node) || [post];
     expected = Math.max(expected, post.carousel_media_count || children.length);
     for (const [index, child] of children.entries()) {
@@ -19,7 +20,7 @@ export async function collectMedia(options = {}) {
       if (isVideo && !video) continue;
       const url = video || preview;
       if (url) {
-        const item = {id:String(child.pk || child.id || `${code}_${index + 1}`), type:video ? 'video' : 'image', url, preview, post:code, index:index + 1, aliases:[...(child.image_versions2?.candidates || []).map(x => x.url), ...(child.display_resources || []).map(x => x.src), ...(child.video_versions || []).map(x => x.url)]};
+        const item = {caption, id:String(child.pk || child.id || `${code}_${index + 1}`), type:video ? 'video' : 'image', url, preview, post:code, index:index + 1, aliases:[...(child.image_versions2?.candidates || []).map(x => x.url), ...(child.display_resources || []).map(x => x.src), ...(child.video_versions || []).map(x => x.url)]};
         const existing = items.findIndex(value => value.id === item.id);
         if (existing === -1) items.push(item); else items[existing] = item;
       }
@@ -68,9 +69,10 @@ export async function collectMedia(options = {}) {
     ? document.querySelector(`[data-insta-pick-scope="${options.scopeId}"]`)
     : document.querySelector('[role="dialog"] article') || document.querySelector('article');
   if (root) {
+    const caption = root.querySelector('h1')?.textContent || '';
     for (const video of root.querySelectorAll('video')) {
       const url = video.currentSrc || video.src || video.querySelector('source')?.src;
-      if (url?.startsWith('https:')) items.push({type:'video', url, preview:video.poster, post:code});
+      if (url?.startsWith('https:')) items.push({caption,type:'video', url, preview:video.poster, post:code});
     }
     for (const img of root.querySelectorAll('img')) {
       if (img.closest('header') || img.closest('a') || img.closest('button')) continue;
@@ -79,7 +81,7 @@ export async function collectMedia(options = {}) {
       const candidates = (img.srcset || '').split(',').map(part => part.trim().split(/\s+/)).filter(pair => pair[0]);
       candidates.sort((a,b) => parseFloat(b[1] || 0) - parseFloat(a[1] || 0));
       const url = candidates[0]?.[0] || img.currentSrc || img.src;
-      if (url) items.push({type:'image', url, preview:url, post:code});
+      if (url) items.push({caption,type:'image', url, preview:url, post:code});
     }
   }
   return {items, source:'screen', complete:false, warning: `게시물 전체를 읽지 못했어${apiError ? ` (${apiError})` : ''}. ${items.length ? '현재 로드된 항목만 표시해. 다음 장으로 넘긴 뒤 다시 읽으면 목록에 추가돼.' : '로그인 상태를 확인하고 게시물을 새로고침해 줘. blob 방식 영상은 직접 주소를 찾지 못하면 저장할 수 없어.'}`};
